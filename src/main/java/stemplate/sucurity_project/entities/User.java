@@ -1,19 +1,13 @@
 package stemplate.sucurity_project.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Setter
-@Getter
-@NoArgsConstructor
-@RequiredArgsConstructor
+@Data
 @Table(name = "users")
 public class User {
     @Id

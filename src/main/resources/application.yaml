@@ -4,7 +4,7 @@ server:
     context-path: /stock
 
 jwt:
-  secret: 984hg493gh0439rthr0429uruj2309yh937gc763fe87t3f89723gf
+  secret: c2luOTA=
   lifetime: 10m
 spring:
   datasource:
