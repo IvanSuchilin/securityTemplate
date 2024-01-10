@@ -1,6 +1,7 @@
 package stemplate.sucurity_project.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,7 @@ import stemplate.sucurity_project.utils.JwtTokenUtils;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
     private final UserService userService;
     private final JwtTokenUtils jwtTokenUtils;
@@ -25,6 +27,7 @@ public class AuthController {
 
     @PostMapping("/auth")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest jwtRequestAuth) {
+        System.out.println("Запрос авторизации");
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequestAuth.getEmail(), jwtRequestAuth.getPassword()));
         } catch (BadCredentialsException e) {
