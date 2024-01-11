@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import stemplate.sucurity_project.dto.JwtRequest;
 import stemplate.sucurity_project.dto.JwtResponse;
+import stemplate.sucurity_project.dto.RegistrationUserDto;
 import stemplate.sucurity_project.exceptions.AuthError;
+import stemplate.sucurity_project.services.AuthService;
 import stemplate.sucurity_project.services.UserService;
 import stemplate.sucurity_project.utils.JwtTokenUtils;
 
@@ -22,19 +24,18 @@ import stemplate.sucurity_project.utils.JwtTokenUtils;
 @Slf4j
 public class AuthController {
     private final UserService userService;
-    private final JwtTokenUtils jwtTokenUtils;
-    private final AuthenticationManager authenticationManager;
+
+    private final AuthService authService;
 
     @PostMapping("/auth")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest jwtRequestAuth) {
         log.info("Запрос авторизации для " + jwtRequestAuth.getEmail());
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequestAuth.getEmail(), jwtRequestAuth.getPassword()));
-        } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(new AuthError(HttpStatus.UNAUTHORIZED.value(), "Wrong passsword or login"), HttpStatus.UNAUTHORIZED);
-        }
-        UserDetails userDetails = userService.loadUserByUsername(jwtRequestAuth.getEmail());
-        String token = jwtTokenUtils.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+        return authService.createAuthToken(jwtRequestAuth);
+    }
+
+    @PostMapping("/registration")
+    public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
+        log.info("запрос регистарции для пользователя " + registrationUserDto.getEmail());
+        return userService.createNewUser(registrationUserDto);
     }
 }
