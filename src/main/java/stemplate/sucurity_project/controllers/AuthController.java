@@ -27,7 +27,7 @@ public class AuthController {
 
     @PostMapping("/auth")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest jwtRequestAuth) {
-        System.out.println("Запрос авторизации");
+        log.info("Запрос авторизации для " + jwtRequestAuth.getEmail());
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequestAuth.getEmail(), jwtRequestAuth.getPassword()));
         } catch (BadCredentialsException e) {

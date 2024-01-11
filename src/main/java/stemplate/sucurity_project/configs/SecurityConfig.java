@@ -35,7 +35,7 @@ public class SecurityConfig {
                     request.requestMatchers("/secured").hasAnyRole("USER", "ADMIN");
                     request.requestMatchers("/register").permitAll();
                     request.requestMatchers("/info").hasAnyRole("USER", "ADMIN");
-                    request.requestMatchers("/admin").hasRole("Admin");
+                    request.requestMatchers("/admin").hasRole("ADMIN");
                     request.anyRequest().permitAll();
                 }).sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
