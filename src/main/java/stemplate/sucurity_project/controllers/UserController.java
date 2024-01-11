@@ -13,19 +13,19 @@ import java.security.Principal;
 public class UserController {
 
     @GetMapping("/unsecured")
-    public String unsecuredData(){
+    public String unsecuredData() {
         log.info("вход в /unsecured");
         return "Unsecured Data";
     }
 
     @GetMapping("/secured")
-    public String securedData(){
+    public String securedData() {
         log.info("вход в /secured");
         return "Secured Data";
     }
 
     @GetMapping("/admin")
-    public String adminData(){
+    public String adminData() {
         log.info("вход в /admin");
         return "Admin Data";
     }

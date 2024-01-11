@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor (onConstructor_={@Lazy})
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 @Service
 @Slf4j
 public class UserService implements UserDetailsService {
@@ -31,14 +31,14 @@ public class UserService implements UserDetailsService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Optional<User> findByUserEmail(String email){
+    public Optional<User> findByUserEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = findByUserEmail(email).orElseThrow(()-> new UsernameNotFoundException(String.format(
+        User user = findByUserEmail(email).orElseThrow(() -> new UsernameNotFoundException(String.format(
                 "Пользователь %s не найден", email)));
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 user.getRoles()
@@ -47,20 +47,20 @@ public class UserService implements UserDetailsService {
                         .collect(Collectors.toList()));
     }
 
-    public User buildNewUser(RegistrationUserDto registrationUserDto){
+    public User buildNewUser(RegistrationUserDto registrationUserDto) {
         User newUser = new User();
         newUser.setEmail(registrationUserDto.getEmail());
         newUser.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
         newUser.setRoles(List.of(roleRepository.findByName("ROLE_USER").get()));
-         return userRepository.save(newUser);
+        return userRepository.save(newUser);
     }
 
     public ResponseEntity<?> createNewUser(RegistrationUserDto registrationUserDto) {
-        if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())){
-            return new ResponseEntity<>(new AuthError(HttpStatus.BAD_REQUEST.value(), "Пароли не совпадают"),HttpStatus.BAD_REQUEST);
+        if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {
+            return new ResponseEntity<>(new AuthError(HttpStatus.BAD_REQUEST.value(), "Пароли не совпадают"), HttpStatus.BAD_REQUEST);
         }
-        if (findByUserEmail(registrationUserDto.getEmail()).isPresent()){
-            return new ResponseEntity<>(new AuthError(HttpStatus.BAD_REQUEST.value(), "Пользователь с такой почтой существует"),HttpStatus.BAD_REQUEST);
+        if (findByUserEmail(registrationUserDto.getEmail()).isPresent()) {
+            return new ResponseEntity<>(new AuthError(HttpStatus.BAD_REQUEST.value(), "Пользователь с такой почтой существует"), HttpStatus.BAD_REQUEST);
         }
         User storedUser = buildNewUser(registrationUserDto);
         return ResponseEntity.ok(new UserDto(storedUser.getId(), storedUser.getEmail()));

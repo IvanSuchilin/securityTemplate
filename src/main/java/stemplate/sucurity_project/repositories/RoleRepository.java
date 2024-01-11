@@ -7,6 +7,6 @@ import stemplate.sucurity_project.entities.Role;
 import java.util.Optional;
 
 @Repository
-public interface RoleRepository  extends JpaRepository<Role, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
     Optional<Role> findByName(String roleName);
 }

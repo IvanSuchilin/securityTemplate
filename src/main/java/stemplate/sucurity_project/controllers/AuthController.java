@@ -2,22 +2,14 @@ package stemplate.sucurity_project.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import stemplate.sucurity_project.dto.JwtRequest;
-import stemplate.sucurity_project.dto.JwtResponse;
 import stemplate.sucurity_project.dto.RegistrationUserDto;
-import stemplate.sucurity_project.exceptions.AuthError;
 import stemplate.sucurity_project.services.AuthService;
 import stemplate.sucurity_project.services.UserService;
-import stemplate.sucurity_project.utils.JwtTokenUtils;
 
 @RestController
 @RequiredArgsConstructor

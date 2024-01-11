@@ -16,14 +16,15 @@ import java.util.Map;
 
 @Component
 public class JwtTokenUtils {
-    @Value("${jwt.secret}")
-    private String secret;
+//    @Value("${jwt.secret}")
+//    private String secret;
 
     @Value("${jwt.lifetime}")
     private Duration jwtLifetime;
 
-   // private SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
-private SecretKey key = Jwts.SIG.HS256.key().build();
+    // private SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
+    private final SecretKey key = Jwts.SIG.HS256.key().build();
+
     public String generateToken(UserDetails userDetails) {
 
         //Список ролей
