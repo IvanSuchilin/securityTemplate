@@ -1,7 +1,7 @@
 # Security Template
 ___
 
-*Базовый шаблон - проект под JWT spring security*
+*Базовый шаблон - проект под JWT spring security (Java 17 + Spring Boot 3.2.0)*
 ___
 
  ## Стек
